@@ -1,4 +1,4 @@
 export const enum EventName {
-    GameFinish = "GameFinish",
-    GameRestart = "GameRestart",
+    // 玩家移动方向
+    PlayerMove = "PlayerMove",
 }

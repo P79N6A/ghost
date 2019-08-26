@@ -2,7 +2,6 @@ import { UIAnimation } from "./UIAnimation";
 import { Debug } from "../config/G";
 import UIManager from "../manager/UIManager";
 import EventCenter from "../event/EventCenter";
-import FuncAnim from "../func/funcAnim";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -26,10 +25,10 @@ export default class UIBase extends cc.Component {
     @property({ type: UIAnimation })
     closeAnimation = UIAnimation.None;
 
-    @property({type: cc.Boolean})
+    @property({ type: cc.Boolean })
     isUseCover = true;
 
-    @property({type: cc.Boolean})
+    @property({ type: cc.Boolean })
     touchOutSizeClose = true;
 
     @property(cc.Button)
@@ -39,19 +38,13 @@ export default class UIBase extends cc.Component {
 
     onLoad() {
         this.linkWidget(this.node, this.nodeDict);
-        const anim = FuncAnim.createAnim(this, this.showAnimation, this.onOpened);
-        if (anim) {
-            this.node.runAction(anim);
-        } else {
-            this.onOpened();
-        }
         if (this.m_btnClose) {
             this.m_btnClose.node.on("click", this.closeSelf, this);
         }
         if (this.isUseCover) {
             UIManager.showCover();
         }
-
+        this.doOpenAnim();
     }
 
 
@@ -81,21 +74,61 @@ export default class UIBase extends cc.Component {
     }
 
     public closeSelf() {
-        if (this.destroyed){
+        if (this.destroyed) {
             return;
         }
         this.destroyed = true;
-        const anim = FuncAnim.createAnim(this, this.closeAnimation, this.onClosed);
-        if (anim) {
-            this.node.runAction(anim);
-        } else {
-            this.onClosed();
-        }
+        this.doCloseAnim();
     }
     public onClosed() {
         EventCenter.removeEventByContext(this);
         Debug.log("close UI " + this.node.name);
         UIManager.closeView(this.node);
+    }
+
+    // 打开动画
+    private doOpenAnim() {
+        if (this.showAnimation === UIAnimation.None) {
+            this.onOpened();
+            return;
+        }
+        let anim: cc.Action;
+        if (this.showAnimation === UIAnimation.OpenScale) {
+            this.node.scale = 0.8;
+            const anim = cc.sequence(
+                cc.scaleTo(0.05, 1),
+                cc.scaleTo(0.1, 1.08),
+                cc.scaleTo(0.1, 1),
+                cc.callFunc(() => {
+                    this.onOpened();
+                }, this),
+            )
+        }
+        if (anim) {
+            this.node.runAction(anim);
+        }
+    }
+    // 关闭动画
+    private doCloseAnim() {
+        if (this.closeAnimation === UIAnimation.None) {
+            this.onClosed();
+            return;
+        }
+        let anim: cc.Action;
+        if (this.closeAnimation === UIAnimation.CloseScale) {
+            this.node.scale = 0.8;
+            const anim = cc.sequence(
+                cc.scaleTo(0.08, 1.04),
+                cc.scaleTo(0.08, 1),
+                cc.scaleTo(0.12, 0),
+                cc.callFunc(() => {
+                    this.onClosed();
+                }, this),
+            )
+        }
+        if (anim) {
+            this.node.runAction(anim);
+        }
     }
 
 }

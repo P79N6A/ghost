@@ -4,6 +4,9 @@ export default class G {
     public static Config = {
         Debug: true,
         HTTP_DOMAIN: 'https://mg-cloud-api.bytedance.com/monster/invoke',
+
+        MoveDelta: 3, // 检测移动最短距离
+        
         code: {
             disconnect: 0,
             success: 100,
