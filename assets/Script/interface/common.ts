@@ -3,7 +3,9 @@ export interface IMessagePlayerMove {
     dirX: number,
     dirY: number,
     angle: number,
+    speed: number,
 }
+
 
 export interface IDataAccount {
     id: string,

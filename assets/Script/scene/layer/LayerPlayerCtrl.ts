@@ -42,6 +42,7 @@ export default class LayerPlayerCtrl extends cc.Node {
             dirX: dir.x,
             dirY: dir.y,
             angle: angle,
+            speed: 1,
         }
 
         Debug.log("摇杆角度 " + dir.x + " " + dir.y + "  角度=" + angle);
@@ -50,16 +51,17 @@ export default class LayerPlayerCtrl extends cc.Node {
     }
     // 触摸结束
     private onTouchEnd(e: cc.Touch) {
+
         //Debug.log("触摸结束 ")
         const msg: IMessagePlayerMove = {
             id: DataAccount.getUserId(),
-            dirX: dir.x,
-            dirY: dir.y,
-            angle: angle,
+            dirX: 0,
+            dirY: 0,
+            angle: 0,
+            speed: 0,
         }
-
-        Debug.log("摇杆角度 " + dir.x + " " + dir.y + "  角度=" + angle);
         EventCenter.sendEvent(EventName.PlayerMove, msg);
+
     }
 
 }
