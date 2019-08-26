@@ -1,5 +1,7 @@
 export interface IMessagePlayerMove {
     id: string,
+    dirX: number,
+    dirY: number,
     angle: number,
 }
 

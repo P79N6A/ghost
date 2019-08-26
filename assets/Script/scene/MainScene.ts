@@ -22,7 +22,10 @@ export default class MainScene extends cc.Component {
 
   //玩家移动
   private onEventPlayerMove(msg: IMessagePlayerMove) {
-    Debug.log("选择角度 " + msg.angle);
+    //Debug.log("选择角度 " + msg.dirX + "  " + msg.dirY);
+    //const angle = cc.v2(msg.dirX, msg.dirY).signAngle(cc.v2(0, 1));
     this.mPlayer.angle = msg.angle;
+    const rigidBody = this.mPlayer.getComponent(cc.RigidBody);
+    rigidBody.linearVelocity = cc.v2(500 * msg.dirX, 500 * msg.dirY);
   }
 }

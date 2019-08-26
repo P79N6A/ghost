@@ -5,7 +5,7 @@ export default class G {
         Debug: true,
         HTTP_DOMAIN: 'https://mg-cloud-api.bytedance.com/monster/invoke',
 
-        MoveDelta: 3, // 检测移动最短距离
+        MoveDelta: 10, // 检测移动最短距离
         
         code: {
             disconnect: 0,

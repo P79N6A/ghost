@@ -2996,8 +2996,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1.5,
-      "y": -1.5,
+      "x": 1,
+      "y": -1,
       "z": 1
     },
     "_eulerAngles": {
@@ -3381,7 +3381,7 @@
     },
     "_enabled": true,
     "_defaultClip": {
-      "__uuid__": "fc64a8f3-c7e1-4fff-a397-4565cae5a99e"
+      "__uuid__": "27d6e111-7fce-4d45-b72f-636f23e2bd79"
     },
     "_clips": [
       {
@@ -3391,7 +3391,7 @@
         "__uuid__": "27d6e111-7fce-4d45-b72f-636f23e2bd79"
       }
     ],
-    "playOnLoad": false,
+    "playOnLoad": true,
     "_id": "d2bexSw0hJPqpugIDkI3iL"
   },
   {
@@ -3413,7 +3413,7 @@
       "y": 0
     },
     "_angularVelocity": 0,
-    "_fixedRotation": false,
+    "_fixedRotation": true,
     "enabledContactListener": false,
     "bullet": false,
     "awakeOnLoad": true,

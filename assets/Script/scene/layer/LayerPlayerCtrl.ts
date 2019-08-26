@@ -5,22 +5,12 @@ import { EventName } from "../../event/EventName";
 import { IMessagePlayerMove } from "../../interface/common";
 import DataAccount from "../../data/DataAccount";
 
-// Learn TypeScript:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class LayerPlayerCtrl extends cc.Node {
     private mMainScene: MainScene;
-    private mLastTouchPosition = cc.v2();
+    private mStartPosition = cc.v2();
     constructor(scene: MainScene) {
         super();
         this.mMainScene = scene;
@@ -38,29 +28,38 @@ export default class LayerPlayerCtrl extends cc.Node {
 
     // 触摸开始
     private onTouchStart(e: cc.Touch) {
-        //Debug.log("触摸开始 "+ e.getLocation()+"  "+ e.getLocationInView());
-
+        Debug.log("触摸开始 " + e.getLocation());
+        this.mStartPosition = e.getLocation();
     }
     // 触摸移动
     private onTouchMove(e: cc.Touch) {
-        const delta = e.getDelta();
-
-        if (delta.mag() > G.Config.MoveDelta) {
-            let angle = delta.angle(cc.v2(0, 1));
-            angle = Math.floor(angle / Math.PI * 180);
-            if (delta.x > 0) {
-                angle = -angle;
-            }
-            const msg: IMessagePlayerMove = {
-                id: DataAccount.getUserId(),
-                angle: angle
-            }
-            EventCenter.sendEvent(EventName.PlayerMove, msg);
+        Debug.log("触摸移动 " + e.getLocation());
+        const touchPosition = e.getLocation();
+        const dir = touchPosition.sub(this.mStartPosition).normalizeSelf();
+        const angle = -cc.v2(dir.x, dir.y).signAngle(cc.v2(0, 1)) / Math.PI * 180;
+        const msg: IMessagePlayerMove = {
+            id: DataAccount.getUserId(),
+            dirX: dir.x,
+            dirY: dir.y,
+            angle: angle,
         }
+
+        Debug.log("摇杆角度 " + dir.x + " " + dir.y + "  角度=" + angle);
+        EventCenter.sendEvent(EventName.PlayerMove, msg);
+
     }
     // 触摸结束
     private onTouchEnd(e: cc.Touch) {
         //Debug.log("触摸结束 ")
+        const msg: IMessagePlayerMove = {
+            id: DataAccount.getUserId(),
+            dirX: dir.x,
+            dirY: dir.y,
+            angle: angle,
+        }
+
+        Debug.log("摇杆角度 " + dir.x + " " + dir.y + "  角度=" + angle);
+        EventCenter.sendEvent(EventName.PlayerMove, msg);
     }
 
 }

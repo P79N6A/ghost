@@ -20,7 +20,7 @@ export default class GameManager {
         Debug.log('width:' + cc.winSize.width + "  " + 'height:' + cc.winSize.height);
         cc.director.getPhysicsManager().enabled = true;
         cc.director.getPhysicsManager().gravity = cc.v2(0, 0);
-        var draw = cc.PhysicsManager.DrawBits;
-        cc.director.getPhysicsManager().debugDrawFlags = draw.e_shapeBit | draw.e_jointBit;
+        //var draw = cc.PhysicsManager.DrawBits;
+       // cc.director.getPhysicsManager().debugDrawFlags = draw.e_shapeBit | draw.e_jointBit;
     }
 }
