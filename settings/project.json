@@ -5,11 +5,6 @@
       true,
       true,
       true,
-      true
-    ],
-    [
-      true,
-      true,
       true,
       true
     ],
@@ -17,9 +12,25 @@
       true,
       true,
       true,
+      true,
       true
     ],
     [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    [
+      true,
       true,
       true,
       true,
@@ -81,7 +92,8 @@
     "default",
     "wall",
     "ghost",
-    "block"
+    "block",
+    "man"
   ],
   "last-module-event-record-time": 1566554525095,
   "simulator-orientation": false,
